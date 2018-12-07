@@ -25,7 +25,7 @@ class HomeState extends State<Home> {
           color: Colors.red,
           elevation: _elevation,
           child: Text(
-            'Sign out',
+            'Log out',
             style: TextStyle(
               fontSize: 20.0,
             ),
