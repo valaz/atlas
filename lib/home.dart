@@ -60,7 +60,12 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_getTitle()),
+        title: Text(_getTitle(),
+          style: TextStyle(
+            color: Theme
+                .of(context)
+                .accentColor,
+          ),),
         elevation: UI.elevation,
       ),
       body: _children[_currentIndex], // new

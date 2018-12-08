@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const String testEmail = 'test@test.com';
 const String testPassword = '111111';
@@ -18,6 +19,8 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+  SharedPreferences prefs;
 
   Future<FirebaseUser> getCurrentUser() async {
     FirebaseUser currentUser = await firebaseAuth.currentUser();
@@ -72,6 +75,8 @@ class _LoginState extends State<Login> {
 
 
   Future saveUserToCollection(FirebaseUser firebaseUser) async {
+    prefs = await SharedPreferences.getInstance();
+
     final QuerySnapshot result = await Firestore.instance
         .collection('users')
         .where('id', isEqualTo: firebaseUser.uid)
@@ -89,6 +94,19 @@ class _LoginState extends State<Login> {
         'photoUrl': firebaseUser.photoUrl,
         'id': firebaseUser.uid,
       });
+
+      // Write data to local
+      await prefs.setString('id', firebaseUser.uid);
+      await prefs.setString('nickname', firebaseUser.displayName);
+      await prefs.setString('email', firebaseUser.email);
+      await prefs.setString('photoUrl', firebaseUser.photoUrl);
+    } else {
+      // Write data to local
+      await prefs.setString('id', documents[0]['id']);
+      await prefs.setString('nickname', documents[0]['nickname']);
+      await prefs.setString('email', documents[0]['email']);
+      await prefs.setString('photoUrl', documents[0]['photoUrl']);
+      await prefs.setString('aboutMe', documents[0]['aboutMe']);
     }
   }
 

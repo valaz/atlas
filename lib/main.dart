@@ -26,6 +26,10 @@ class MyApp extends StatelessWidget {
             color: Color.fromRGBO(238, 238, 238, 1),
           ),
         ),
+        textTheme: Theme.of(context).textTheme.apply(
+          bodyColor: Colors.white,
+          displayColor: Colors.orange[600],
+        ),
       ),
       home: Start(),
       routes: routes,
