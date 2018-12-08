@@ -1,8 +1,13 @@
 import 'package:atlas/login.dart';
 import 'package:atlas/ui.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatelessWidget {
+  final FirebaseUser user;
+
+  const Profile({Key key, this.user}) : super(key: key);
+
   Widget _getSignoutButton(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -21,8 +26,8 @@ class Profile extends StatelessWidget {
           ),
           onPressed: () {
             print('Log out');
-            Navigator.of(context).pushReplacementNamed(
-                Login.route); //todo  replace to pushReplacementNamed
+            FirebaseAuth.instance.signOut();
+            Navigator.of(context).pushReplacementNamed(Login.route);
           },
         ),
       ),
@@ -34,6 +39,11 @@ class Profile extends StatelessWidget {
     return Container(
       child: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+          Text(user.email,
+            style: TextStyle(
+              color: Colors.green,
+            ),
+          ),
           _getSignoutButton(context),
         ]),
       ),

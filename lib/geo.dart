@@ -73,11 +73,6 @@ class _GeoState extends State<Geo> {
       location = null;
     }
 
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    //if (!mounted) return;
-
     setState(() {
       _startLocation = location;
     });
@@ -94,6 +89,9 @@ class _GeoState extends State<Geo> {
         SizedBox(
           height: 350.0,
           child: GoogleMap(
+            options: GoogleMapOptions(
+                mapType: MapType.normal
+            ),
             onMapCreated: _onMapCreated,
           ),
         )

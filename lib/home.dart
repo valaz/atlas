@@ -2,17 +2,21 @@ import 'package:atlas/achievements.dart';
 import 'package:atlas/geo.dart';
 import 'package:atlas/profile.dart';
 import 'package:atlas/ui.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
   static final String route = "home";
+  final FirebaseUser user;
+
+  const Home({Key key, this.user}) : super(key: key);
 
   @override
-  HomeState createState() => HomeState();
+  _HomeState createState() => _HomeState();
 }
 
-class HomeState extends State<Home> {
+class _HomeState extends State<Home> {
 
   int _currentIndex = 0;
   final List<Widget> _children = [
@@ -21,6 +25,14 @@ class HomeState extends State<Home> {
     Profile(),
   ];
 
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.user != null) {
+      _children[2] = Profile(user: widget.user);
+    }
+  }
 
   void onTabTapped(int index) {
     setState(() {

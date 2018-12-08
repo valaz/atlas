@@ -1,5 +1,6 @@
 import 'package:atlas/home.dart';
 import 'package:atlas/login.dart';
+import 'package:atlas/start.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: Login(),
+      home: Start(),
       routes: routes,
     );
   }
