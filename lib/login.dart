@@ -1,10 +1,8 @@
 import 'package:atlas/home.dart';
+import 'package:atlas/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-const _minButtonWidth = 220.0;
-const _buttonHeight = 50.0;
-const _elevation = 0.0;
 
 class Login extends StatefulWidget {
   static final String route = "login";
@@ -20,10 +18,10 @@ class LoginState extends State<Login> {
       child: SizedBox(
         width: double.infinity,
         child: MaterialButton(
-          minWidth: _minButtonWidth,
-          height: _buttonHeight,
+          minWidth: UI.minButtonWidth,
+          height: UI.buttonHeight,
           color: color,
-          elevation: _elevation,
+          elevation: UI.elevation,
           child: Row(
             children: <Widget>[
               Padding(
@@ -54,7 +52,7 @@ class LoginState extends State<Login> {
       appBar: AppBar(
         title: Text("Log in"),
         automaticallyImplyLeading: false,
-        elevation: _elevation,
+        elevation: UI.elevation,
       ),
       body: Center(
         child: Padding(
@@ -78,7 +76,7 @@ class LoginState extends State<Login> {
           ),
         ),
       ),
-      backgroundColor: Color.fromRGBO(241, 241, 241, 1),
+      backgroundColor: UI.backgroundColor,
     );
   }
 }

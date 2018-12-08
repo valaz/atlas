@@ -1,10 +1,9 @@
-import 'package:atlas/login.dart';
+import 'package:atlas/achievements.dart';
+import 'package:atlas/geo.dart';
+import 'package:atlas/profile.dart';
+import 'package:atlas/ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-const _minButtonWidth = 220.0;
-const _buttonHeight = 50.0;
-const _elevation = 0.0;
 
 class Home extends StatefulWidget {
   static final String route = "home";
@@ -14,46 +13,63 @@ class Home extends StatefulWidget {
 }
 
 class HomeState extends State<Home> {
-  Widget _getSignoutButton() {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: SizedBox(
-        width: double.infinity,
-        child: MaterialButton(
-          minWidth: _minButtonWidth,
-          height: _buttonHeight,
-          color: Colors.red,
-          elevation: _elevation,
-          child: Text(
-            'Log out',
-            style: TextStyle(
-              fontSize: 20.0,
-            ),
-          ),
-          onPressed: () {
-            print('Log out');
-            Navigator.of(context)
-                .pushNamed(Login.route); //todo  replace to pushReplacementNamed
-          },
-        ),
-      ),
-    );
+
+  int _currentIndex = 0;
+  final List<Widget> _children = [
+    Geo(),
+    Achievements(UI.backgroundColor),
+    Profile(),
+  ];
+
+
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
+  String _getTitle() {
+    switch (_currentIndex) {
+      case(0):
+        return 'Home';
+        break;
+      case(1):
+        return 'Achievements';
+        break;
+      case(2):
+        return 'Profile';
+        break;
+      default:
+        return 'Home';
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
-        automaticallyImplyLeading: false,
-        elevation: _elevation,
+        title: Text(_getTitle()),
+        elevation: UI.elevation,
       ),
-      body: Center(
-        child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-          _getSignoutButton(),
-        ]),
+      body: _children[_currentIndex], // new
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: onTabTapped, // new
+        currentIndex: _currentIndex, // new
+        items: [
+          new BottomNavigationBarItem(
+            icon: Icon(Icons.location_on),
+            title: Text('Home'),
+          ),
+          new BottomNavigationBarItem(
+            icon: Icon(Icons.local_play),
+            title: Text('Achievements'),
+          ),
+          new BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              title: Text('Profile')
+          )
+        ],
       ),
-      backgroundColor: Color.fromRGBO(241, 241, 241, 1),
     );
   }
 }
